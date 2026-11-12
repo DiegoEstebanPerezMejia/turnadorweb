@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: turnero
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    # 1 worker + hilos: el limitador de intentos de login vive en memoria
+    startCommand: gunicorn app:app --workers 1 --threads 4 --timeout 60 --bind 0.0.0.0:$PORT
+    healthCheckPath: /healthz
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.7
+      - key: APP_TIMEZONE
+        value: America/Mexico_City
+      # Cadena de conexión de Neon (la pides al crear el servicio)
+      - key: DATABASE_URL
+        sync: false
+      # Firma las cookies de sesión: Render la genera sola y la conserva entre despliegues
+      - key: SECRET_KEY
+        generateValue: true
+      # Administrador inicial (solo se usa la primera vez que se crea la BD)
+      - key: ADMIN_USER
+        value: admin
+      - key: ADMIN_PASSWORD
+        sync: false
