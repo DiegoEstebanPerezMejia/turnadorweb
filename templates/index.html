@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sistema de Turnos</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <!-- ===== INICIO DE SESIÓN ===== -->
+  <section id="login" class="login" hidden>
+    <form id="form-login" class="login-caja azul">
+      <h1>🎫 Sistema de Turnos</h1>
+      <p class="login-sub">Inicia sesión para continuar</p>
+      <label class="campo">
+        <span class="campo-label">👤 Usuario</span>
+        <input id="login-usuario" class="campo-input" type="text" autocomplete="username" autocapitalize="none" spellcheck="false" required>
+      </label>
+      <label class="campo">
+        <span class="campo-label">🔑 Contraseña</span>
+        <input id="login-password" class="campo-input" type="password" autocomplete="current-password" required>
+      </label>
+      <div id="login-error" class="dlg-error"></div>
+      <button id="login-enviar" class="btn azul login-btn" type="submit">Ingresar</button>
+    </form>
+  </section>
+
+  <!-- ===== APLICACIÓN ===== -->
+  <div id="app" hidden>
+    <header class="barra morado">
+      <span id="barra-usuario" class="barra-usuario">—</span>
+      <span class="espaciador"></span>
+      <button id="btn-stats" class="btn azulgris" title="Mis estadísticas detalladas">📊 Mis estadísticas</button>
+      <button id="btn-admin" class="btn morado" title="Crear usuarios y dar o quitar acceso" hidden>👥 Usuarios</button>
+      <button id="btn-clave" class="btn naranja">🔑 Mi clave</button>
+      <button id="btn-salir" class="btn gris">🚪 Salir</button>
+    </header>
+
+    <main class="app">
+      <section class="paneles">
+        <!-- PANEL DE ESPERA -->
+        <article class="panel azul">
+          <h2 class="panel-titulo">TURNOS EN ESPERA</h2>
+          <div id="turno-espera" class="turno-grande">—</div>
+          <div id="contador-espera" class="contador">Total en cola: 0 turnos</div>
+          <div class="botones">
+            <button id="btn-nuevo" class="btn azul" title="Nuevo turno (Alt+N)">➕ Nuevo Turno</button>
+            <button id="btn-lista-espera" class="btn azulgris">📋 Ver Lista</button>
+            <button id="btn-limpiar-espera" class="btn rosa" title="Limpiar espera (Alt+L)">🧹 Limpiar</button>
+          </div>
+        </article>
+
+        <!-- PANEL DE ATENCIÓN -->
+        <article class="panel verde">
+          <h2 class="panel-titulo">EN ATENCIÓN</h2>
+          <div id="turno-actual" class="turno-grande">—</div>
+          <div id="empleado-atencion" class="empleado">—</div>
+          <div id="contador-atencion" class="contador">Total en atención: 0 turnos</div>
+          <div class="botones">
+            <button id="btn-anterior" class="btn verde" title="Devolver a espera (Alt+A / Retroceso)">◀ Anterior</button>
+            <button id="btn-siguiente" class="btn verde" title="Siguiente (Alt+S)">Siguiente ▶</button>
+            <button id="btn-lista-atencion" class="btn azulgris">📋 Ver Lista</button>
+            <button id="btn-limpiar-atencion" class="btn rosa" title="Limpiar atención (Alt+K)">🧹 Limpiar</button>
+          </div>
+        </article>
+      </section>
+
+      <fieldset class="controles morado">
+        <legend>⚙️ Controles de mi turnero</legend>
+        <button id="btn-toggle-empleado" class="btn rojo">🔒 Empleado: OBLIGATORIO</button>
+        <button id="btn-toggle-cotizacion" class="btn gris">📝 Cotización: OFF</button>
+        <button id="btn-cotizar" class="btn cian" title="Registrar cotización del turno actual (Alt+C)">📝 Registrar cotización</button>
+        <label class="control-emp">
+          N° Empleado:
+          <input id="input-empleado" type="text" maxlength="60" placeholder="Sugerido (ej: VEN 02)" autocomplete="off">
+        </label>
+        <span id="etiqueta-empleado" class="etiqueta-emp">Empleado: (ninguno)</span>
+        <span class="espaciador"></span>
+        <button id="btn-reiniciar" class="btn cafe">🔄 Reiniciar Turnos</button>
+        <button id="btn-historial" class="btn azulgris">📜 Historial</button>
+        <button id="btn-cerrar-sesion" class="btn rojo" title="Guarda el resumen en el historial y empieza una sesión de trabajo nueva">🏁 Cerrar Jornada</button>
+        <button id="btn-pantalla" class="btn azul" title="Abre una vista solo de paneles, ideal para un monitor o TV">🖥️ Modo Pantalla</button>
+      </fieldset>
+
+      <div class="stats">
+        <span id="stats">Cargando…</span>
+        <span id="conexion" class="conexion" title="Estado de la conexión">●</span>
+      </div>
+    </main>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/app.js') }}" defer></script>
+</body>
+</html>
